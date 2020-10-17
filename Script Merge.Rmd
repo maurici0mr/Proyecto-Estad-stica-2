@@ -1,0 +1,117 @@
+Merge para la construccion de nuestra base final
+
+Integrantes: Mauricio Molero, Anamile Velazco, Kamila Levano y Melany Sucuitana
+
+Llamando a la primera variable: educación
+```{r}
+link1="https://raw.githubusercontent.com/maurici0mr/BaseEducacion-Estad2/main/IndicEducacion.csv"
+edu=read.csv(link1,stringsAsFactors = F)
+```
+
+```{r}
+str(edu)
+names(edu)
+```
+
+Llamando segunda variable: Barreras legales
+
+```{r}
+link2="https://raw.githubusercontent.com/20175813/Anamile-Velazco--TRABAJO_ESTADISTICA/master/barLegCul.csv"
+lega=read.csv(link2,stringsAsFactors = F)
+```
+
+```{r}
+lega[lega$Pais=="Venezuela, RB","Pais"]="Venezuela"
+lega[lega$Pais=="Korea, Rep.","Pais"]="South Korea"
+lega[lega$Pais=="Korea, Dem. People's Rep.","Pais"]="North Korea"
+lega[lega$Pais=="Iran, Islamic Rep.","Pais"]="Iran"
+lega[lega$Pais=="Congo, Dem. Rep.","Pais"]="DR Congo"
+lega[lega$Pais=="Bahamas, The","Pais"]="Bahamas"
+lega[lega$Pais=="Egypt, Arab Rep.","Pais"]="Egypt"
+lega[lega$Pais=="Hong Kong SAR, China","Pais"]="Hong Kong"
+lega[lega$Pais=="Macao SAR, China","Pais"]="Macao"
+lega[lega$Pais=="Yemen, Rep.","Pais"]="Yemen"
+```
+
+Llamando a la tercera variable: economica
+
+```{r}
+link3="https://raw.githubusercontent.com/maurici0mr/BaseEducacion-Estad2/main/VarEconomica.csv"
+econ=read.csv(link3,stringsAsFactors = F)
+```
+
+```{r}
+names(econ)= c("Pais","Cuenta","Autoempleo","Empleo")
+```
+
+```{r}
+econ[econ$Pais=="Venezuela, RB","Pais"]="Venezuela"
+econ[econ$Pais=="Korea, Rep.","Pais"]="South Korea"
+econ[econ$Pais=="Korea, Dem. People's Rep.","Pais"]="North Korea"
+econ[econ$Pais=="Iran, Islamic Rep.","Pais"]="Iran"
+econ[econ$Pais=="Congo, Dem. Rep.","Pais"]="DR Congo"
+econ[econ$Pais=="Bahamas, The","Pais"]="Bahamas"
+econ[econ$Pais=="Egypt, Arab Rep.","Pais"]="Egypt"
+econ[econ$Pais=="Hong Kong SAR, China","Pais"]="Hong Kong"
+econ[econ$Pais=="Macao SAR, China","Pais"]="Macao"
+econ[econ$Pais=="Yemen, Rep.","Pais"]="Yemen"
+```
+
+Llamando a la Variable dependiente:
+
+```{r}
+link4="https://raw.githubusercontent.com/20175813/Anamile-Velazco--TRABAJO_ESTADISTICA/master/parlamento.csv"
+parla=read.csv(link4,stringsAsFactors = F)
+```
+
+```{r}
+parla$X=NULL
+```
+
+```{r}
+parla[parla$Pais=="Venezuela, RB","Pais"]="Venezuela"
+parla[parla$Pais=="Korea, Rep.","Pais"]="South Korea"
+parla[parla$Pais=="Korea, Dem. People's Rep.","Pais"]="North Korea"
+parla[parla$Pais=="Iran, Islamic Rep.","Pais"]="Iran"
+parla[parla$Pais=="Congo, Dem. Rep.","Pais"]="DR Congo"
+parla[parla$Pais=="Bahamas, The","Pais"]="Bahamas"
+parla[parla$Pais=="Egypt, Arab Rep.","Pais"]="Egypt"
+parla[parla$Pais=="Hong Kong SAR, China","Pais"]="Hong Kong"
+parla[parla$Pais=="Macao SAR, China","Pais"]="Macao"
+parla[parla$Pais=="Yemen, Rep.","Pais"]="Yemen"
+```
+
+Merge
+
+```{r}
+partifem=merge(edu,lega,all.x = T, all.y = T)
+#podemos omitir el all.x/all.y si queremos
+```
+
+```{r}
+partifem=merge(partifem,econ,by.x='Pais', by.y='Pais')
+```
+
+```{r}
+partifem=merge(partifem,parla,by.x='Pais', by.y='Pais')
+```
+
+```{r}
+partifem=na.omit(partifem)
+```
+
+Exportando data final
+
+```{r}
+names(partifem)
+```
+
+```{r}
+names(partifem)= c("Pais","Alfabetizacion","Desercion","Secundaria","SecundariaT","Credito","ViolenciaDom","RemuEquitativa","ObedecerEsposo","Acoso","Cuenta","Autoempleo","Empleo","Parlamento")
+```
+
+```{r}
+write.csv(partifem,"DataParticipacionFem.csv", row.names = F)
+```
+
+
