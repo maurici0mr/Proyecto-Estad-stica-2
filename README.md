@@ -1,1 +1,1 @@
-# Proyecto-Estadistica-2
+# Trabajo-Grupal-Estadistica-2
