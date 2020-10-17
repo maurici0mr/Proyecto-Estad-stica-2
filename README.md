@@ -1,1 +1,1 @@
-# Proyecto-Estad-stica-2
+# Proyecto-Estadistica-2
