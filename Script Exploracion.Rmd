@@ -1,0 +1,374 @@
+Script de exploracion de las variables de nuestra base de datos
+
+Integrantes: Mauricio Molero, Anamile Velazco, Kamila Levano y Melany Sucuitana
+
+```{r}
+library(DescTools)
+library(e1071)
+```
+
+```{r}
+link="https://raw.githubusercontent.com/maurici0mr/Proyecto-Estad-stica-2/main/DataParticipacionFem.csv"
+partifem=read.csv(link,stringsAsFactors = F)
+```
+
+# PRIMERA VARIABLE: NIVEL EDUCATIVO FEMENINO (encargado: Mauricio Molero)
+
+a. Exploracion univariada
+
+Medidas de tendencia central:
+
+```{r}
+str(partifem)
+names(partifem)[5]="Lice"
+```
+
+```{r}
+Mode(partifem$Alfabetizacion)
+summary(partifem$Alfabetizacion)
+```
+
+```{r}
+Mode(partifem$Desercion)
+summary(partifem$Desercion)
+```
+
+```{r}
+Mode(partifem$Secundaria)
+summary(partifem$Secundaria)
+```
+
+```{r}
+Mode(partifem$Lice)
+summary(partifem$Lice)
+```
+
+```{r}
+hist(partifem$Alfabetizacion)
+hist(partifem$Desercion)
+hist(partifem$Secundaria)
+hist(partifem$Lice)
+```
+
+Medidas de dispersión y asimetria:
+
+```{r}
+sd(partifem$Alfabetizacion)
+var(partifem$Alfabetizacion)
+```
+
+```{r}
+skewness(partifem$Alfabetizacion) #Asimetría
+kurtosis(partifem$Alfabetizacion) #Curtosis
+```
+
+```{r}
+sd(partifem$Desercion)
+var(partifem$Desercion)
+```
+
+```{r}
+skewness(partifem$Desercion) #Asimetría
+kurtosis(partifem$Desercion) #Curtosis
+```
+
+```{r}
+sd(partifem$Secundaria)
+var(partifem$Secundaria)
+```
+
+```{r}
+skewness(partifem$Secundaria) #Asimetría
+kurtosis(partifem$Secundaria) #Curtosis
+```
+
+```{r}
+sd(partifem$Lice)
+var(partifem$Lice)
+```
+
+```{r}
+skewness(partifem$Lice) #Asimetría
+kurtosis(partifem$Lice) #Curtosis
+```
+
+b. Analisis bivariado
+
+Diagramas de dispersión para observación:
+```{r}
+plot(partifem$Alfabetizacion, partifem$Parlamento, 
+     main="Relación entre cantidad en el Parlamento y Alfabetiazición", 
+     xlab="Alfabetización", 
+     ylab="Cantidad en Parlamento")
+plot(partifem$Desercion, partifem$Parlamento)
+plot(partifem$Secundaria, partifem$Parlamento)
+plot(partifem$Lice, partifem$Parlamento)
+```
+
+Correlaciones: 
+
+1) Variables: Alfabetizacion y Parlamento 
+  H0: Las variables son estadísticamente independientes
+  HA: Las variables son estadísticamente dependientes
+```{r}
+cor.test(partifem$Alfabetizacion, partifem$Parlamento)
+```
+C: No existe correlación entre las variables ya que mi P value es mayor a 0.05.  
+
+2) Variables: Desercion y Parlamento 
+
+  H0: Las variables son estadísticamente independientes
+  HA: Las variables son estadísticamente dependientes
+```{r}
+
+cor.test(partifem$Desercion, partifem$Parlamento)
+```
+C: No existe correlación entre las variables ya que mi P value es mayor a 0.05.
+
+3) Variables: Secundaria y Parlamento 
+
+  H0: Las variables son estadísticamente independientes
+  HA: Las variables son estadísticamente dependientes
+```{r}
+
+cor.test(partifem$Secundaria, partifem$Parlamento)
+```
+C: No existe correlación debido a que mi P-Value es mayor a 0.05.  
+
+4) Variables: Lice y Parlamento 
+
+  H0: Las variables son estadísticamente independientes
+  HA: Las variables son estadísticamente dependientes
+```{r}
+
+cor.test(partifem$Lice, partifem$Parlamento)
+```
+C: No existe correlación debido a que mi P-Value es mayor a 0.05.  
+
+# SEGUNDA VARIABLE: ECONOMICA (encargadas: Kamila Levano y Melany Sucuitana)
+
+a. Exploracion univariada
+
+Medidas de tendencia central:
+
+```{r}
+class(partifem$Empleo)
+class(partifem$Autoempleo)
+class(partifem$Cuenta)
+```
+
+```{r}
+Mode(partifem$Empleo)
+median (partifem$Empleo)
+mean(partifem$Empleo)
+summary(partifem$Empleo)
+```
+
+```{r}
+Mode(partifem$Autoempleo)
+median (partifem$Autoempleo)
+mean(partifem$Autoempleo)
+summary(partifem$Autoempleo)
+```
+
+```{r}
+Mode(partifem$Cuenta)
+median (partifem$Cuenta)
+mean(partifem$Cuenta)
+summary(partifem$Cuenta)
+```
+
+```{r}
+hist(partifem$Empleo)
+hist(partifem$Autoempleo)
+hist(partifem$Cuenta)
+```
+
+Medidas de dispersión y asimetria:
+
+```{r}
+summary(partifem$Cuenta)
+sd(partifem$Cuenta)
+var(partifem$Cuenta)
+rango=max(partifem$Cuenta)-min(partifem$Cuenta)
+rango
+```
+
+```{r}
+skewness(partifem$Cuenta) #Asimetría
+
+kurtosis(partifem$Cuenta) #Curtosis
+quantile((partifem$Cuenta),probs=c(0, 0.25, 0.5, 0.75, 1))
+```
+
+```{r}
+summary(partifem$Empleo)
+sd(partifem$Empleo)
+var(partifem$Empleo)
+rango=max(partifem$Empleo)-min(partifem$Empleo)
+rango
+```
+
+```{r}
+skewness(partifem$Empleo) #Asimetría
+kurtosis(partifem$Empleo) #Curtosis
+quantile((partifem$Empleo),probs=c(0, 0.25, 0.5, 0.75, 1))
+```
+
+```{r}
+summary(partifem$Autoempleo)
+sd(partifem$Autoempleo)
+var(partifem$Autoempleo)
+rango=max(partifem$Autoempleo)-min(partifem$Autoempleo)
+rango
+```
+
+```{r}
+skewness(partifem$Autoempleo) #Asimetría
+kurtosis(partifem$Autoempleo) #Curtosis
+quantile((partifem$Autoempleo),probs=c(0, 0.25, 0.5, 0.75, 1))
+```
+
+b. Analisis bivariado
+
+Diagramas de dispersión para observación:
+```{r}
+plot(partifem$Cuenta, partifem$Parlamento)
+plot(partifem$Cuenta, partifem$Parlamento, 
+     main="Relación entre cantidad en el Parlamento y Cuenta bancaria", 
+     xlab="Cuenta Bancaria", 
+     ylab="Cantidad en Parlamento")
+plot(partifem$Empleo, partifem$Parlamento)
+plot(partifem$Autoempleo, partifem$Parlamento)
+```
+
+Correlaciones: 
+
+1) Variables: Cuenta Bancaria y Parlamento 
+  H0: Las variables son estadísticamente independientes
+  HA: Las variables son estadísticamente dependientes
+```{r}
+cor.test(partifem$Cuenta, partifem$Parlamento)
+```
+C: No existe correlación entre las variables ya que mi P value es mayor a 0.05; por tanto, rechazo la HA.  
+
+2) Variables: Empleo y Parlamento 
+
+  H0: Las variables son estadísticamente independientes
+  HA: Las variables son estadísticamente dependientes
+```{r}
+
+cor.test(partifem$Empleo, partifem$Parlamento)
+```
+C: Sí existe correlacion entre mis variables. Existe una asociación directa entre las variables y tiene una fuerza baja.
+
+3) Variables: Auto-empleo y Parlamento 
+
+  H0: Las variables son estadísticamente independientes
+  HA: Las variables son estadísticamente dependientes
+```{r}
+
+cor.test(partifem$Autoempleo, partifem$Parlamento)
+```
+C: No existe correlación debido a que mi P-Value es mayor a 0.05. 
+
+# TERCERA VARIABLE: BARRERAS LEGALES/CULTURALES (encargada: Anamile Velazco)
+
+Estructura
+```{r}
+partifem$Credito=as.factor(partifem$Credito)
+partifem$ViolenciaDom=as.factor(partifem$ViolenciaDom)
+partifem$RemuEquitativa=as.factor(partifem$RemuEquitativa)
+partifem$ObedecerEsposo=as.factor(partifem$ObedecerEsposo)
+partifem$Acoso=as.factor(partifem$Acoso)
+
+str(partifem)
+
+levels(partifem$Credito)<-c("no","si")
+levels(partifem$ViolenciaDom)<-c("no","si")
+levels(partifem$RemuEquitativa)<-c("no","si")
+levels(partifem$ObedecerEsposo)<-c("no","si")
+levels(partifem$Acoso)<-c("no","si")
+
+```
+
+
+a. Exploracion univariada
+
+Medidas de tendencia central
+```{r}
+Mode(partifem$Credito)
+summary(partifem$Credito)
+```
+
+```{r}
+Mode(partifem$ViolenciaDom)
+summary(partifem$ViolenciaDom)
+```
+
+```{r}
+Mode(partifem$RemuEquitativa)
+summary(partifem$RemuEquitativa)
+```
+
+```{r}
+Mode(partifem$ObedecerEsposo)
+summary(partifem$ObedecerEsposo)
+```
+
+```{r}
+Mode(partifem$Acoso)
+summary(partifem$Acoso)
+```
+
+```{r}
+tabla_Credito <- table(partifem$Credito)
+tabla_Violencia <- table(partifem$ViolenciaDom)
+tabla_Remuneracion <- table(partifem$RemuEquitativa)
+tabla_Obedecer <- table(partifem$ObedecerEsposo)
+tabla_Acoso <- table(partifem$Acoso)
+```
+
+```{r}
+barplot(tabla_Credito)
+barplot(tabla_Violencia)
+barplot(tabla_Remuneracion)
+barplot(tabla_Obedecer)
+barplot(tabla_Acoso)
+```
+
+b.Analisis bivariado
+```{r}
+library(psych)
+```
+
+Variable Crédito
+```{r}
+describeBy(partifem$Parlamento,group=partifem$Credito)
+boxplot(partifem$Parlamento~partifem$Credito)
+```
+
+Variable ViolenciaDom
+```{r}
+describeBy(partifem$Parlamento,group=partifem$ViolenciaDom)
+boxplot(partifem$Parlamento~partifem$ViolenciaDom)
+```
+
+Variable RemuEquitativa
+```{r}
+describeBy(partifem$Parlamento,group=partifem$RemuEquitativa)
+boxplot(partifem$Parlamento~partifem$RemuEquitativa)
+```
+
+Variable ObedecerEsposo
+```{r}
+describeBy(partifem$Parlamento,group=partifem$ObedecerEsposo)
+boxplot(partifem$Parlamento~partifem$ObedecerEsposo)
+```
+
+Variable Acoso
+```{r}
+describeBy(partifem$Parlamento,group=partifem$Acoso)
+boxplot(partifem$Parlamento~partifem$Acoso)
+```
+
